@@ -1,7 +1,11 @@
 <link rel="stylesheet" href="/styles/main.css" />
 
 <header>
-  <a href="/">Lobo</a>
+  <% if(locals.user) { %>
+  <p><%= locals.user.name %></p>
+  <% }else { %>
+  <a href="/"> TheLobo</a>
+  <%} %>
   <nav>
     <% if(locals.user){ %>
     <a href="/checkin">Checkin client</a>

@@ -25,9 +25,21 @@ app.use(
 );
 
 // authorizarion middleware
-const superAdminRoutes = ["/newSpot", "/newRoom"];
-const receptionistRoutes = ["/roomUpdates"];
-const managerRoutes = ["/addReceptionist", "/roomUpdates"];
+
+const receptionistRoutes = ["/roomUpdates", "/dash/reception"];
+const managerRoutes = [
+  "/addReceptionist",
+  "/newRoom",
+  "/newSpot",
+  "/roomUpdates",
+  "/dash/manager",
+];
+const superAdminRoutes = [
+  ...receptionistRoutes,
+  ...managerRoutes,
+  "/dash/superadmin",
+]; // js spread operator - combine all routes
+
 //
 // all other routes are public
 app.use((req, res, next) => {
@@ -56,7 +68,8 @@ app.use((req, res, next) => {
         req.path === "/about" ||
         req.path === "/book" ||
         req.path === "/checkout" ||
-        req.path === "/checkin"
+        req.path === "/checkin" ||
+        req.path === "/logout"
       ) {
         next(); // allow access to public routes
       } else {
@@ -111,6 +124,35 @@ app.get("/book", (req, res) => {
 app.get("/bookings", (req, res) => {
   res.render("bookings.ejs");
 });
+
+// manager routes
+app.get("/dash/manager", (req, res) => {
+  res.render("manager/dash.ejs");
+});
+app.get("/addNewSpot", (req, res) => {
+  res.render("addNewSpot.ejs");
+});
+app.get("/addNewRoom", (req, res) => {
+  res.render("addNewRoom.ejs");
+});
+
+app.get("/addReceptionist", (req, res) => {
+  res.render("manager/addReceptionist.ejs");
+});
+// END OF MANAGER ROUTES
+
+//Receptionist Routes
+app.get("/dash/reception", (req, res) => {
+  res.render("reception/dash.ejs");
+});
+// end of receptionist routes
+
+// super admin routes
+app.get("/dash/superadmin", (req, res) => {
+  res.render("superadmin/dash.ejs");
+});
+
+// end of super admin routes
 app.get("/newSpot", (req, res) => {
   res.render("newSpot.ejs");
 });
@@ -137,7 +179,7 @@ app.post("/login", (req, res) => {
           if (isPasswordValid) {
             // password is valid - create session - express session middleware
             req.session.user = user; // creating a session for the user
-            res.send("Login successful - Valid password");
+            res.redirect("/"); // redirect to home page
           } else {
             // password is invalid
             res.status(401).send("Invalid password");
@@ -146,6 +188,10 @@ app.post("/login", (req, res) => {
       }
     }
   );
+});
+app.get("/logout", (req, res) => {
+  req.session.destroy(); // destroy the session
+  res.redirect("/"); // redirect to home page
 });
 
 // console.log(bcrypt.hashSync("admin758", 3)); // hash password for testing
