@@ -266,3 +266,7 @@ VALUES
 ('Bob Manager', 'bob@company.com', 'manager', '$2b$10$zJZtBZHgDRPqkODyxwKMuOaU0XKkztHtHoEiX.Rz5OFLrWhd3WTNi'),     -- admin123
 
 ('Catherine Admin', 'cat@company.com', 'superadmin', '$2b$10$zJZtBZHgDRPqkODyxwKMuOaU0XKkztHtHoEiX.Rz5OFLrWhd3WTNi'); -- admin123
+
+
+-- joining tables 
+SELECT room, number_of_nights, checkin_date, full_name, amount_paid FROM roombookings JOIN clients ON roombookings.client_id = clients.client_id left join payments on roombookings.booking_id = payments.booking_id;

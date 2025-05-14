@@ -1,9 +1,10 @@
 .dash-stats {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   gap: 20px;
 }
+
 .dash-stats .dash-stat {
   background-color: aliceblue;
   border-radius: 10px;
@@ -15,20 +16,24 @@
   margin: 0;
   font-weight: bold;
 }
+
 section {
   margin: 20px;
 }
+
 table {
   font-family: arial, sans-serif;
   border-collapse: collapse;
   width: 100%;
 }
+
 td,
 th {
   border: 1px solid #dddddd;
   text-align: left;
   padding: 8px;
 }
+
 tr:nth-child(even) {
   background-color: #dddddd;
 }
